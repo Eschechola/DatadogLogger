@@ -1,0 +1,15 @@
+datadog:
+  apiKeyExistingSecret: datadog-secret
+  appKeyExistingSecret: datadog-secret
+  site: us5.datadoghq.com
+  kubelet:
+    tlsVerify: false
+    
+providers:
+  aks:
+    enabled: true
+
+#kubectl create secret generic datadog-secret --from-literal api-key=04ddeef5b89e430066989566cf5bfb99 --from-literal app-key=145acfe7593197c5c73128a483eb9f7e6854ee94
+
+
+# helm install datadog -f datadog-values.yaml --set targetSystem=<TARGET_SYSTEM> datadog/datadog

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-console
+  namespace: logger
+  labels:
+    app: logger-console
+    tags.datadoghq.com/env: production
+    tags.datadoghq.com/service: logger
+    tags.datadoghq.com/version: "1.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logger-console
+  template:
+    metadata:
+      labels:
+        app: logger-console
+        tags.datadoghq.com/env: production
+        tags.datadoghq.com/service: logger
+        tags.datadoghq.com/version: "1.0"
+        admission.datadoghq.com/enabled: "true"
+      annotations:
+        admission.datadoghq.com/dotnet-lib.version: v2.36.0-musl
+    spec:
+      containers:
+        - name: logger
+          image: datadogesc.azurecr.io/logger:latest
+          imagePullPolicy: Always
+          env:
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            - name: DD_APPSEC_ENABLED
+              value: "true"
+            - name: DD_RUNTIME_METRICS_ENABLED
+              value: "true"
+            - name: DD_TRACE_DEBUG
+              value: "true"
+            - name: DD_PROFILING_ENABLED
+              value: "true"
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"    
