@@ -1,44 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logger-console
+  name: logger-api
   namespace: logger
   labels:
-    app: logger-console
+    app: logger-api
     tags.datadoghq.com/env: production
-    tags.datadoghq.com/service: logger
+    tags.datadoghq.com/service: logger-api
     tags.datadoghq.com/version: "1.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: logger-console
+      app: logger-api
   template:
     metadata:
       labels:
-        app: logger-console
+        app: logger-api
         tags.datadoghq.com/env: production
-        tags.datadoghq.com/service: logger
+        tags.datadoghq.com/service: logger-api
         tags.datadoghq.com/version: "1.0"
         admission.datadoghq.com/enabled: "true"
       annotations:
         admission.datadoghq.com/dotnet-lib.version: v2.36.0-musl
     spec:
       containers:
-        - name: logger
-          image: datadogesc.azurecr.io/logger:latest
-          imagePullPolicy: Always
+        - name: logger-api
+          image: docker.io/library/logger-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 80
           env:
-            - name: DD_LOGS_INJECTION
-              value: "true"
-            - name: DD_APPSEC_ENABLED
-              value: "true"
-            - name: DD_RUNTIME_METRICS_ENABLED
-              value: "true"
-            - name: DD_TRACE_DEBUG
-              value: "true"
-            - name: DD_PROFILING_ENABLED
-              value: "true"
+          - name: DD_LOGS_INJECTION
+            value: "true"
+          - name: DD_APPSEC_ENABLED
+            value: "true"
+          - name: DD_RUNTIME_METRICS_ENABLED
+            value: "true"
+          - name: DD_TRACE_DEBUG
+            value: "true"
+          - name: DD_PROFILING_ENABLED
+            value: "true"
+          - name: ASPNETCORE_URLS
+            value: http://*:80
           resources:
             limits:
               memory: 512Mi

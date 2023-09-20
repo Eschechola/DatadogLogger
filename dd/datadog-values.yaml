@@ -8,6 +8,3 @@ datadog:
 providers:
   aks:
     enabled: true
-
-# kubectl create secret generic datadog-secret --from-literal api-key=<API_KEY> --from-literal app-key=<APP-KEY>
-# helm install datadog -f datadog-values.yaml --set targetSystem=<TARGET_SYSTEM> datadog/datadog
