@@ -10,17 +10,17 @@
 
 <br><br>
 
-<h3>Set Docker default context</h3>
+<h3>(Locally Only) Set Docker default context</h3>
 <code>docker context use default</code>
 
 <br><br>
 
-<h3>Load your image to minikube storage</h3>
+<h3>(Locally Only) Load your image to minikube storage</h3>
 <code>minikube image load logger-api</code>
 
 <br><br>
 
-<h3>List minikube images</h3>
+<h3>(Locally Only) List minikube images</h3>
 <code>minikube image ls</code>
 
 <br><br>
