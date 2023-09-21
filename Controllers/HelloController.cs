@@ -17,7 +17,11 @@ public class HomeController : ControllerBase
     [HttpGet("/hello")]
     public IActionResult Hello()
     {
-        _logger.LogError("New request!");
+        try{
+            throw new Exception("Test exception!!");
+        }catch(Exception e){
+            _logger.LogError(e.Message);
+        }
 
         return Ok(new
         {
